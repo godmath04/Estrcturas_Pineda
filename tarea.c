@@ -8,42 +8,57 @@ struct alumnos
     char carrera[50];
     float promedio;
 };
+int variosAlumnos()
+{
+    int otroAlumno;
+    puts("Desea ingresar los datos de otro alumnos: (1 SI | 2 NO)");
+    scanf("%d", &otroAlumno);
+    return otroAlumno;
+}
 
 void obtencionDatos(struct alumnos *ptr)
 {
-    printf("Ingrese el numero de matricula del alumno:\n");
+
+    puts("Ingrese el numero de matricula del alumno:");
     scanf("%d", &ptr->matricula);
     getchar(); // Tengo un problema con el bufer y eso hace que se llene solo el apartado de nombre
 
-    printf("Ingrese el nombre del alumno:\n");
+    puts("Ingrese el nombre del alumno:");
     gets(ptr->nombre);
     printf("\n");
-    printf("Ingrese la direcci'on del alumno:\n");
+    puts("Ingrese la direcci'on del alumno:");
     gets(ptr->direccion);
     printf("\n");
-    printf("Ingrese la carrera del estudiante:\n");
+    puts("Ingrese la carrera del estudiante:");
     gets(ptr->carrera);
     printf("\n");
-    printf("Ingrese el promedio estudiante:\n");
+    puts("Ingrese el promedio estudiante:");
     scanf("%f", &ptr->promedio);
 };
 
-void mostrarDatos(struct alumnos Alumni)
+void mostrarDatos(struct alumnos *Alumni, int numeracionAlumnos)
 {
-    printf("Datos del Alumno:\n");
-    printf("Matricula: %d, Nombre: %s, Direccion: %s, Carrera: %s, Promedio: %0.2f", Alumni.matricula, Alumni.nombre, Alumni.direccion, Alumni.carrera, Alumni.promedio);
-};
+    for (int i = 0; i < numeracionAlumnos; i++)
+    {
+        puts("Datos del Alumno:");
+        printf("Matricula: %d\nNombre: %s\nDireccion: %s\nCarrera: %s\nPromedio: %0.2f\n", Alumni[i].matricula, Alumni[i].nombre, Alumni[i].direccion, Alumni[i].carrera, Alumni[i].promedio);
+        printf("\n");
+    }
+}
 
 int main(int argc, char const *argv[])
 {
-    printf("Bienvenido al sistema de registro de alumnos.\n");
+    int numeracionAlumnos = 0;
+    puts("Bienvenido al sistema de registro de alumnos.");
     printf("************\n");
-    struct alumnos MisAlumnos; 
+    struct alumnos MisAlumnos[100];
+    do
     {
-        obtencionDatos(&MisAlumnos);
-        mostrarDatos(MisAlumnos);
-    };
-    
+        obtencionDatos(&MisAlumnos[numeracionAlumnos]);
+        numeracionAlumnos++;
+    } while (variosAlumnos() == 1);
+
+    mostrarDatos(MisAlumnos, numeracionAlumnos);
 
     return 0;
 }
